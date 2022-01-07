@@ -6,6 +6,7 @@ function pack
     set package_level (sed -n '/package_level=/'p $resource_dir/ctpm_pkg_info | sed 's/package_level=//g')
     set package_name (sed -n '/package_name=/'p $resource_dir/ctpm_pkg_info | sed 's/package_name=//g')
     set package_ver (sed -n '/package_ver=/'p $resource_dir/ctpm_pkg_info | sed 's/package_ver=//g')
+    set package_unis (sed -n '/package_unis=/'p $resource_dir/ctpm_pkg_info | sed 's/package_unis=//g')
     if [ "$package_name" = "" ]
         logger 4 'No package_name defined,abort'
         exit

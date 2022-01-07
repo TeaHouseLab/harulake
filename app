@@ -67,6 +67,7 @@ function pack
     set package_level (sed -n '/package_level=/'p $resource_dir/ctpm_pkg_info | sed 's/package_level=//g')
     set package_name (sed -n '/package_name=/'p $resource_dir/ctpm_pkg_info | sed 's/package_name=//g')
     set package_ver (sed -n '/package_ver=/'p $resource_dir/ctpm_pkg_info | sed 's/package_ver=//g')
+    set package_unis (sed -n '/package_unis=/'p $resource_dir/ctpm_pkg_info | sed 's/package_unis=//g')
     if [ "$package_name" = "" ]
         logger 4 'No package_name defined,abort'
         exit
@@ -102,8 +103,12 @@ end
 function init-files
     echo "package_name=" >$resource_dir/ctpm_pkg_info
     echo "package_ver=" >>$resource_dir/ctpm_pkg_info
-    echo "package_level=" >>$resource_dir/ctpm_pkg_info
+    echo "package_packager=" >>$resource_dir/ctpm_pkg_info
+    echo "package_level=sys/user" >>$resource_dir/ctpm_pkg_info
+    echo "package_unis=0/1" >>$resource_dir/ctpm_pkg_info
     touch $resource_dir/src/file_list
+    touch $resource_dir/src/unis_hooks
+    touch hooks
 end
 
 function init
@@ -117,7 +122,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-01-02_14:26:16
+echo Build_Time_UTC=2022-01-07_13:49:17
 set -lx prefix [harulake]
 switch $argv[1]
     case init

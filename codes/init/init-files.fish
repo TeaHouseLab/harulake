@@ -6,5 +6,5 @@ function init-files
     echo "package_unis=0/1" >>$resource_dir/ctpm_pkg_info
     touch $resource_dir/src/file_list
     touch $resource_dir/src/unis_hooks
-    touch hooks
+    touch $resource_dir/hooks
 end

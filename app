@@ -123,7 +123,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-01-08_00:22:50
+echo Build_Time_UTC=2022-01-08_08:37:19
 set -lx prefix [harulake]
 switch $argv[1]
     case init

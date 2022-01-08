@@ -35,6 +35,7 @@ function pack
     else
         logger 4 'No src directory,abort'
     end
-    tar zcf $package_name.ctpkg $resource_dir/
+    logger 0 "Packing $package_name.ctpkg"
+    tar zcf $package_name.ctpkg $resource_dir/ &>/dev/null
     logger 0 "Processed,store at $package_name.ctpkg"
 end

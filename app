@@ -96,7 +96,8 @@ function pack
     else
         logger 4 'No src directory,abort'
     end
-    tar zcf $package_name.ctpkg $resource_dir/
+    logger 0 "Packing $package_name.ctpkg"
+    tar zcf $package_name.ctpkg $resource_dir/ &>/dev/null
     logger 0 "Processed,store at $package_name.ctpkg"
 end
 
@@ -108,7 +109,7 @@ function init-files
     echo "package_unis=0/1" >>$resource_dir/ctpm_pkg_info
     touch $resource_dir/src/file_list
     touch $resource_dir/src/unis_hooks
-    touch hooks
+    touch $resource_dir/hooks
 end
 
 function init
@@ -122,7 +123,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-01-07_13:49:17
+echo Build_Time_UTC=2022-01-08_00:22:50
 set -lx prefix [harulake]
 switch $argv[1]
     case init

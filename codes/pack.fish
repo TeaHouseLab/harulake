@@ -22,11 +22,11 @@ function pack
     if test -d $resource_dir/src
         if test -e $resource_dir/src/file_list
             for src_file in (cat $resource_dir/src/file_list)
-            end
-            if test -e $resource_dir/src$src_file
-            else
-                logger 4 "$src_file doesn't exist in $resource_dir/src,but you declared it in file_list,abort"
-                exit
+                if test -e $resource_dir/src$src_file
+                else
+                    logger 4 "$src_file doesn't exist in $resource_dir/src,but you declared it in file_list,abort"
+                    exit
+                end
             end
         else
             logger 4 "No $resource_dir/src/file_list defined,abort"

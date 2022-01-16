@@ -83,11 +83,11 @@ function pack
     if test -d $resource_dir/src
         if test -e $resource_dir/src/file_list
             for src_file in (cat $resource_dir/src/file_list)
-            end
-            if test -e $resource_dir/src$src_file
-            else
-                logger 4 "$src_file doesn't exist in $resource_dir/src,but you declared it in file_list,abort"
-                exit
+                if test -e $resource_dir/src$src_file
+                else
+                    logger 4 "$src_file doesn't exist in $resource_dir/src,but you declared it in file_list,abort"
+                    exit
+                end
             end
         else
             logger 4 "No $resource_dir/src/file_list defined,abort"
@@ -104,6 +104,7 @@ end
 function init-files
     echo "package_name=" >$resource_dir/ctpm_pkg_info
     echo "package_ver=" >>$resource_dir/ctpm_pkg_info
+    echo "package_relver=" >>$resource_dir/ctpm_pkg_info
     echo "package_packager=" >>$resource_dir/ctpm_pkg_info
     echo "package_level=sys/user" >>$resource_dir/ctpm_pkg_info
     echo "package_unis=0/1" >>$resource_dir/ctpm_pkg_info
@@ -123,7 +124,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-01-08_08:37:19
+echo Build_Time_UTC=2022-01-16_01:16:41
 set -lx prefix [harulake]
 switch $argv[1]
     case init
@@ -135,7 +136,7 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "harulake.FrostFlower@build2"
+        logger 0 "harulake.pomelo@build3"
     case h help *
         logger 0 "init argv >>> make a new package
 pack argv >>> pack the package"

@@ -9,7 +9,7 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "Begonia@build1"
+        logger 0 "Corleone@build1"
     case h help *
         logger 0 "init argv >>> make a new package
 pack argv >>> pack the package"

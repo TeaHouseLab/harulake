@@ -1,6 +1,5 @@
 #!/usr/bin/env fish
 
-#!/usr/bin/env fish
 function logger-warn
   set_color magenta
   echo "$prefix [Warn] $argv[1..-1]"
@@ -100,7 +99,7 @@ function pack
     end
     logger 0 "Packing $package_name.ctpkg"
     tar zcf $package_name.ctpkg . &>/dev/null
-    mv $package_name.ctpkg $recudir
+    mv $package_name.ctpkg $recudir &>/dev/null
     cd $recudir
     logger 0 "Processed,store at $recudir/$package_name.ctpkg"
 end
@@ -128,7 +127,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-01-31_04:51:30
+echo Build_Time_UTC=2022-03-05_08:38:28
 set -lx prefix [harulake]
 switch $argv[1]
     case init
@@ -140,7 +139,7 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "Begonia@build1"
+        logger 0 "Corleone@build1"
     case h help *
         logger 0 "init argv >>> make a new package
 pack argv >>> pack the package"

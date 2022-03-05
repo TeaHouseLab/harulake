@@ -39,7 +39,7 @@ function pack
     end
     logger 0 "Packing $package_name.ctpkg"
     tar zcf $package_name.ctpkg . &>/dev/null
-    mv $package_name.ctpkg $recudir
+    mv $package_name.ctpkg $recudir &>/dev/null
     cd $recudir
     logger 0 "Processed,store at $recudir/$package_name.ctpkg"
 end

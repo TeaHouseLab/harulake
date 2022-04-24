@@ -127,7 +127,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-03-05_08:38:28
+echo Build_Time_UTC=2022-04-24_09:44:10
 set -lx prefix [harulake]
 switch $argv[1]
     case init
@@ -139,8 +139,14 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "Corleone@build1"
-    case h help *
-        logger 0 "init argv >>> make a new package
-pack argv >>> pack the package"
+        logger 0 "Quicksand@build1"
+    case h help '*'
+        echo "
+(./)app [init, pack] argv[1]
+
+    init: Create a new package
+
+    pack: Pack the package
+    
+"
 end

@@ -9,8 +9,14 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "Corleone@build1"
-    case h help *
-        logger 0 "init argv >>> make a new package
-pack argv >>> pack the package"
+        logger 0 "Quicksand@build1"
+    case h help '*'
+        echo "
+(./)app [init, pack] argv[1]
+
+    init: Create a new package
+
+    pack: Pack the package
+    
+"
 end

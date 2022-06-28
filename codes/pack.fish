@@ -7,7 +7,7 @@ function pack
     cd $resource_dir
     set package_level (sed -n '/package_level=/'p ctpm_pkg_info | sed 's/package_level=//g')
     set package_name (sed -n '/package_name=/'p ctpm_pkg_info | sed 's/package_name=//g')
-    set package_ver (sid -n '/package_ver=/'p ctpm_pkg_info | sed 's/package_ver=//g')
+    set package_ver (sed -n '/package_ver=/'p ctpm_pkg_info | sed 's/package_ver=//g')
     set package_unis (sed -n '/package_unis=/'p ctpm_pkg_info | sed 's/package_unis=//g')
     if [ "$package_name" = "" ]
         logger 5 'No package_name defined,abort'

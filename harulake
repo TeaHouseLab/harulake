@@ -74,7 +74,7 @@ function pack
     cd $resource_dir
     set package_level (sed -n '/package_level=/'p ctpm_pkg_info | sed 's/package_level=//g')
     set package_name (sed -n '/package_name=/'p ctpm_pkg_info | sed 's/package_name=//g')
-    set package_ver (sid -n '/package_ver=/'p ctpm_pkg_info | sed 's/package_ver=//g')
+    set package_ver (sed -n '/package_ver=/'p ctpm_pkg_info | sed 's/package_ver=//g')
     set package_unis (sed -n '/package_unis=/'p ctpm_pkg_info | sed 's/package_unis=//g')
     if [ "$package_name" = "" ]
         logger 5 'No package_name defined,abort'
@@ -149,7 +149,7 @@ function init
     set_color normal
 end
 
-echo Build_Time_UTC=2022-06-28_03:54:31
+echo Build_Time_UTC=2022-06-28_04:16:30
 set -lx prefix [harulake]
 switch $argv[1]
     case init

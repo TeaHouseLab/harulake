@@ -49,9 +49,9 @@ function pack
     end
     logger 0 "Packing $package_name.ctpkg"
     if test "$prehook" = true
-        tar zcf $package_name.ctpkg . &>/dev/null
-    else
         tar --exclude='./prehook' zcf $package_name.ctpkg . &>/dev/null
+    else
+        tar zcf $package_name.ctpkg . &>/dev/null
     end
     mv $package_name.ctpkg $recudir &>/dev/null
     cd $recudir

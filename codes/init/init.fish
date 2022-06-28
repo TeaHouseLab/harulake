@@ -3,8 +3,9 @@ function init
     if [ "$argv[1]" = "" ]
         set resource_dir .
     end
+    logger 0 "Start deploying package source..."
     mkdir -p $resource_dir/src
     init-files
-    echo "$prefix Deployed"
+    logger 1 "Deployed"
     set_color normal
 end

@@ -9,7 +9,7 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "Quicksand@build1"
+        logger 1 "Hairpin@build1"
     case h help '*'
         echo "
 (./)app [init, pack] argv[1]

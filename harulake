@@ -2,40 +2,47 @@
 
 function logger-warn
   set_color magenta
-  echo "$prefix [Warn] $argv[1..-1]"
+  echo "$prefix ! $argv[1..-1]"
   set_color normal
 end
 function logger-error
   set_color red
-  echo "$prefix [Error] $argv[1..-1]"
+  echo "$prefix x $argv[1..-1]"
   set_color normal
 end
-function logger-info
+function logger-info-start
   set_color normal
-  echo "$prefix [Info] $argv[1..-1]"
+  echo "$prefix + $argv[1..-1]"
+  set_color normal
+end
+function logger-info-end
+  set_color normal
+  echo "$prefix - $argv[1..-1]"
   set_color normal
 end
 function logger-debug
   set_color yellow
-  echo "$prefix [Debug] $argv[1..-1]"
+  echo "$prefix ? $argv[1..-1]"
   set_color normal
 end
 function logger-success
   set_color green
-  echo "$prefix [Successed] $argv[1..-1]"
+  echo "$prefix √ $argv[1..-1]"
   set_color normal
 end
 function logger -d "a lib to print msg quickly"
 switch $argv[1]
 case 0
-  logger-info $argv[2..-1]
+  logger-info-start $argv[2..-1]
 case 1
-  logger-success $argv[2..-1]
+  logger-info-end $argv[2..-1]
 case 2
-  logger-debug $argv[2..-1]
+  logger-success $argv[2..-1]
 case 3
-  logger-warn $argv[2..-1]
+  logger-debug $argv[2..-1]
 case 4
+  logger-warn $argv[2..-1]
+case 5
   logger-error $argv[2..-1]
 end
 end
@@ -67,41 +74,55 @@ function pack
     cd $resource_dir
     set package_level (sed -n '/package_level=/'p ctpm_pkg_info | sed 's/package_level=//g')
     set package_name (sed -n '/package_name=/'p ctpm_pkg_info | sed 's/package_name=//g')
-    set package_ver (sed -n '/package_ver=/'p ctpm_pkg_info | sed 's/package_ver=//g')
+    set package_ver (sid -n '/package_ver=/'p ctpm_pkg_info | sed 's/package_ver=//g')
     set package_unis (sed -n '/package_unis=/'p ctpm_pkg_info | sed 's/package_unis=//g')
     if [ "$package_name" = "" ]
-        logger 4 'No package_name defined,abort'
+        logger 5 'No package_name defined,abort'
         exit
     end
     if [ "$package_ver" = "" ]
-        logger 4 'No package_ver defined,abort'
+        logger 5 'No package_ver defined,abort'
         exit
     end
     if [ "$package_level" = "" ]
-        logger 4 'No package_level defined,abort'
+        logger 5 'No package_level defined,abort'
         exit
+    end
+    if test -x prehook
+        set prehook true
+        logger 0 "Running prehook before packing..."
+        if ./prehook
+            logger 2 "Prehook succeed"
+        else
+            logger 5 "Failed to run prehook, abort"
+            exit
+        end
     end
     if test -d src
         if test -e src/file_list
             for src_file in (cat src/file_list)
                 if test -e src$src_file
                 else
-                    logger 4 "$src_file doesn't exist in src,but you declared it in file_list,abort"
+                    logger 5 "$src_file doesn't exist in src,but you declared it in file_list,abort"
                     exit
                 end
             end
         else
-            logger 4 "No src/file_list defined,abort"
+            logger 5 "No src/file_list defined,abort"
             exit
         end
     else
-        logger 4 'No src directory,abort'
+        logger 5 'No src directory,abort'
     end
     logger 0 "Packing $package_name.ctpkg"
-    tar zcf $package_name.ctpkg . &>/dev/null
+    if test "$prehook" = true
+        tar zcf $package_name.ctpkg . &>/dev/null
+    else
+        tar --exclude='./prehook' zcf $package_name.ctpkg . &>/dev/null
+    end
     mv $package_name.ctpkg $recudir &>/dev/null
     cd $recudir
-    logger 0 "Processed,store at $recudir/$package_name.ctpkg"
+    logger 1 "Processed,store at $recudir/$package_name.ctpkg"
 end
 
 function init-files
@@ -121,13 +142,14 @@ function init
     if [ "$argv[1]" = "" ]
         set resource_dir .
     end
+    logger 0 "Start deploying package source..."
     mkdir -p $resource_dir/src
     init-files
-    echo "$prefix Deployed"
+    logger 1 "Deployed"
     set_color normal
 end
 
-echo Build_Time_UTC=2022-04-24_09:44:10
+echo Build_Time_UTC=2022-06-28_03:54:31
 set -lx prefix [harulake]
 switch $argv[1]
     case init
@@ -139,7 +161,7 @@ switch $argv[1]
     case uninstall
         uninstall harulake
     case v V
-        logger 0 "Quicksand@build1"
+        logger 1 "Hairpin@build1"
     case h help '*'
         echo "
 (./)app [init, pack] argv[1]
